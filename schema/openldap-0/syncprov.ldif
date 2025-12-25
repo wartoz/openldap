@@ -1,0 +1,9 @@
+cat << EOF > /tmp/syncprov.ldif
+# Load syncprov module
+dn: cn=module,cn=config
+changetype: add
+cn: module
+objectClass: olcModuleList
+olcModuleLoad: syncprov.so
+olcModulePath: /opt/bitnami/openldap/lib/openldap
+EOF

@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openldap
+  namespace: argocd
+spec:
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+  project: default
+  sources:
+    - chart: openldap-stack-ha
+      repoURL: https://jp-gouin.github.io/helm-openldap
+      targetRevision: 4.3.3 # Replace with the OpenLDAP version you'd like to install or upgrade to
+      helm:
+        valueFiles: 
+        - $values/openldap-values.yaml
+    - repoURL: 'https://github.com/wartoz/openldap.git'
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: openldap

@@ -1,0 +1,44 @@
+replicaCount: 3
+
+clusterDomain: k8s-demo-01.local
+
+env:
+  LDAP_EXTRA_SCHEMAS: "cosine,inetorgperson,nis,syncprov,serverid,csyncprov,rep,bsyncprov,brep,acls"
+
+initTLSSecret:
+  tls_enabled: true
+  secret: "k8s-ldaps-docker-compose-zip-tls"
+
+persistence:
+  storageClass: "longhorn"
+
+replication:
+  enabled: true
+  tls_reqcert: "demand"
+  clusterName: "k8s-demo-01.local"
+
+global:
+  ldapDomain: "docker-compose.zip"
+  existingSecret: ldap-passwords
+
+phpldapadmin:
+  ingress:
+    ingressClassName: traefik
+    hosts:
+      - k8s-phpldapadmin.docker-compose.zip
+    tls:
+      - secretName: k8s-phpldapadmin-docker-compose-zip-tls
+        hosts:
+          - k8s-phpldapadmin.docker-compose.zip
+  env:
+    PHPLDAPADMIN_LDAP_CLIENT_TLS_REQCERT: "allow"
+
+ltb-passwd:
+  ingress:
+    ingressClassName: traefik
+    hosts:
+      - k8s-ss-password.docker-compose.zip
+    tls:
+      - secretName: k8s-ss-password-docker-compose-zip-tls
+        hosts:
+          - k8s-ss-password.docker-compose.zip

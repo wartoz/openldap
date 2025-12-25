@@ -1,0 +1,38 @@
+dn: olcDatabase={2}mdb,cn=config
+changetype: modify
+add: olcSyncrepl
+olcSyncrepl:
+  rid=201
+  provider=ldap://openldap-0.openldap-headless.openldap.svc.k8s-demo-01.local:1389
+  binddn=cn=admin,dc=docker-compose,dc=zip
+  bindmethod=simple
+  credentials=abf0f61c1e3a4d4244021e27f10ec578
+  searchbase=dc=docker-compose,dc=zip
+  type=refreshAndPersist
+  interval=00:00:00:10
+  network-timeout=0
+  retry="60 +"
+  timeout=1
+  starttls=critical
+  tls_reqcert=demand
+  tls_cacert=/opt/bitnami/openldap/certs/ca.crt
+olcSyncrepl:
+  rid=203
+  provider=ldap://openldap-2.openldap-headless.openldap.svc.k8s-demo-01.local:1389
+  binddn=cn=admin,dc=docker-compose,dc=zip
+  bindmethod=simple
+  credentials=abf0f61c1e3a4d4244021e27f10ec578
+  searchbase=dc=docker-compose,dc=zip
+  type=refreshAndPersist
+  interval=00:00:00:10
+  network-timeout=0
+  retry="60 +"
+  timeout=1
+  starttls=critical
+  tls_reqcert=demand
+  tls_cacert=/opt/bitnami/openldap/certs/ca.crt
+
+dn: olcDatabase={2}mdb,cn=config
+changetype: modify
+add: olcMultiProvider
+olcMultiProvider: TRUE

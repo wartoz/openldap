@@ -1,0 +1,5 @@
+# Set server ID
+dn: cn=config
+changeType: modify
+add: olcServerID
+olcServerID: 2 ldap://openldap-1.openldap-headless.openldap.svc.k8s-demo-01.local:1389
